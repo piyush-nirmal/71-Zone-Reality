@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+    /* Refined Luxury Palette */
+    --color-background: #F9F7F2;
+    --color-heading: #1A120B;
+    --color-primary: #1A120B;
+    --color-body: #4A443F;
+    --color-accent: #A68A64;
+    --color-surface: #F2EBE1;
+    --color-divider: rgba(26, 18, 11, 0.04);
+
+    /* Typography Pairing */
+    --font-serif: "Playfair Display", serif;
+    --font-sans: "Inter", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+
+    /* Architectural Spacing */
+    --spacing-grid-gap: 3rem;
+    --spacing-section: 12rem;
+    --spacing-edge: 8vw;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        background-color: var(--color-background);
+    }
+
+    body {
+        background-color: var(--color-background);
+        color: var(--color-body);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        line-height: 1.6;
+    }
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        opacity: 0.04;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    /* Mature Typography Scale */
+    h1 {
+        font-size: clamp(3.5rem, 10vw, 10rem);
+        line-height: 0.85;
+        letter-spacing: -0.06em;
+        font-weight: 400;
+        font-family: var(--font-serif);
+    }
+
+    h2 {
+        font-size: clamp(2.5rem, 8vw, 7rem);
+        line-height: 0.95;
+        letter-spacing: -0.05em;
+        font-weight: 400;
+        font-family: var(--font-serif);
+    }
+
+    h3 {
+        font-size: clamp(1.5rem, 3.5vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 400;
+        font-family: var(--font-serif);
+    }
+
+    p {
+        font-size: 1.05rem;
+        font-weight: 300;
+        line-height: 1.75;
+        opacity: 1;
+        color: var(--color-body);
+    }
+}
+
+.editorial-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-edge);
+}
+
+.mono-tag {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    font-size: 0.6rem;
+    color: var(--color-accent);
+    display: inline-block;
+    opacity: 1;
+}
+
+.section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+}
+
+.bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+}
+
+.btn-minimal {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-weight: 700;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--color-divider);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--color-heading);
+    opacity: 1;
+}
+
+.btn-minimal:hover {
+    border-color: var(--color-accent);
+    gap: 2.5rem;
+    opacity: 1;
+}
+
+/* Redesigned Nav Link - High Contrast */
+.nav-link {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-weight: 700;
+    color: var(--color-heading);
+    opacity: 1;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+    opacity: 1;
+    color: var(--color-accent);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+}
+
+.reveal-line {
+    height: 1px;
+    background-color: var(--color-divider);
+    width: 100%;
+    opacity: 0.5;
+}
