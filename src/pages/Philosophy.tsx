@@ -12,7 +12,7 @@ const Philosophy = ({ data }: { data: HomePageData }) => {
             exit={{ opacity: 0 }}
             className="pt-20"
         >
-            <About data={data.about} />
+            <About data={data.about} partners={data.partners} />
             <div className="mt-20">
                 <CtaBanner data={data.ctaBanner} settings={data.settings} />
             </div>

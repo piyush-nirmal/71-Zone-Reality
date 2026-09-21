@@ -1,0 +1,6 @@
+{
+  "name": "71 Zone Reality",
+  "description": "71 Zone Reality – Curating prime real estate, luxury residences, and commercial properties in Mumbai. Established 3rd April 2013.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

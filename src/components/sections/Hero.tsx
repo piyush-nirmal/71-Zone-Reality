@@ -50,7 +50,7 @@ const Hero = ({ data, brandName }: HeroProps) => {
                                     {data.heading.split(' ')[0]}
                                 </h1>
                                 <h1 className="text-accent text-[11vw] lg:text-[5.5vw] leading-[0.88] tracking-[-0.05em] font-serif italic font-light max-w-[12ch]">
-                                    {data.heading.split(' ')[1]}
+                                    {data.heading.split(' ').slice(1).join(' ')}
                                 </h1>
 
                                 {/* Subtle accent line */}
@@ -58,15 +58,15 @@ const Hero = ({ data, brandName }: HeroProps) => {
                             </div>
 
                             {/* Subtext - Narrow width, editorial */}
-                            <p className="text-body text-base lg:text-lg font-light leading-relaxed max-w-[28ch] opacity-70">
+                            <p className="text-body text-base lg:text-lg font-light leading-relaxed max-w-[34ch] opacity-90">
                                 {data.subheading}
                             </p>
 
                             {/* CTA - Quiet, underlined */}
                             <div className="pt-4">
                                 <a
-                                    href="#"
-                                    className="group inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-black text-heading/60 hover:text-heading transition-colors duration-700 pb-2 border-b border-divider/30 hover:border-accent/60"
+                                    href="/portfolio"
+                                    className="group inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] font-black text-heading hover:text-accent transition-colors duration-700 pb-2 border-b border-divider/50 hover:border-accent"
                                 >
                                     <span>Explore Collection</span>
                                     <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-700" />
@@ -74,7 +74,7 @@ const Hero = ({ data, brandName }: HeroProps) => {
                             </div>
 
                             {/* Meta information */}
-                            <div className="pt-8 flex items-center gap-6 text-[9px] uppercase tracking-[0.4em] font-bold text-heading/15">
+                            <div className="pt-8 flex items-center gap-6 text-[9px] uppercase tracking-[0.4em] font-bold text-heading/60">
                                 <span>{brandName}</span>
                                 <span className="w-1 h-1 rounded-full bg-divider"></span>
                                 <span>Since 2012</span>

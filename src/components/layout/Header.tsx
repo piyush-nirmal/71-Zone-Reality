@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
-import { Menu, X, ArrowRight, LogOut, User } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { SiteSettings } from "@/types/cms";
-import { useAuth } from "@/context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "@/context/ThemeContext";
 
 interface HeaderProps {
     data: SiteSettings;
 }
 
 const Header = ({ data }: HeaderProps) => {
-    const { logout, isAuthenticated } = useAuth();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { theme, toggleTheme } = useTheme();
     const location = useLocation();
 
     const { scrollY } = useScroll();
@@ -34,19 +34,16 @@ const Header = ({ data }: HeaderProps) => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const allNavLinks = [
-        { name: "Home", path: "/", gated: false },
-        { name: "Portfolio", path: "/portfolio", gated: true },
-        { name: "Experience", path: "/experience", gated: true },
-        { name: "Philosophy", path: "/philosophy", gated: false },
-        { name: "Archives", path: "/archives", gated: true },
-        { name: "Testaments", path: "/testaments", gated: true },
-        { name: "Dialogue", path: "/dialogue", gated: true },
+    const navLinks = [
+        { name: "Home", path: "/" },
+        { name: "Portfolio", path: "/portfolio" },
+        { name: "Associations", path: "/associations" },
+        { name: "Experience", path: "/experience" },
+        { name: "Philosophy", path: "/philosophy" },
+        { name: "Archives", path: "/archives" },
+        { name: "Testaments", path: "/testaments" },
+        { name: "Dialogue", path: "/dialogue" },
     ];
-
-    const navLinks = isAuthenticated
-        ? allNavLinks
-        : allNavLinks.filter(link => !link.gated);
 
     return (
         <>
@@ -72,10 +69,13 @@ const Header = ({ data }: HeaderProps) => {
                     <div className="flex items-center gap-12">
                         <Link
                             to="/"
-                            className="flex flex-col group"
+                            className="flex items-baseline gap-2 group"
                         >
-                            <span className="text-lg md:text-xl font-serif tracking-tight text-heading leading-tight italic font-medium">
+                            <span className="text-xl md:text-2xl font-serif tracking-tight text-heading leading-tight italic font-semibold">
                                 {data.logoText}
+                            </span>
+                            <span className="text-xs uppercase font-sans tracking-[0.25em] font-extrabold text-accent">
+                                {data.logoSubtext || "Reality"}
                             </span>
                         </Link>
                     </div>
@@ -93,27 +93,26 @@ const Header = ({ data }: HeaderProps) => {
                         ))}
                     </nav>
 
-                    <div className="flex items-center gap-6">
-                        {!isAuthenticated ? (
-                            <Link
-                                to="/portfolio"
-                                className="hidden sm:flex items-center gap-3 py-2 px-6 bg-heading text-background border border-heading rounded-[0.25rem] transition-all duration-700 group shadow-lg shadow-heading/10 hover:shadow-heading/20 hover:scale-[1.02] cursor-pointer"
-                            >
-                                <User size={14} strokeWidth={2} />
-                                <span className="text-[10px] uppercase tracking-[0.4em] font-black">Login</span>
-                            </Link>
-                        ) : (
-                            <div className="flex items-center gap-4">
-                                <span className="hidden sm:block text-[9px] uppercase tracking-[0.4em] font-black text-accent italic">Member //</span>
-                                <button
-                                    onClick={logout}
-                                    className="p-2.5 text-heading/40 hover:text-accent hover:bg-accent/5 rounded-full transition-all cursor-pointer"
-                                    title="Terminate Session"
-                                >
-                                    <LogOut size={16} strokeWidth={1} />
-                                </button>
-                            </div>
-                        )}
+                    <div className="flex items-center gap-4 sm:gap-6">
+                        <button
+                            onClick={toggleTheme}
+                            aria-label="Toggle theme mode"
+                            title={theme === "dark" ? "Switch to Ivory Daylight" : "Switch to Obsidian Noir"}
+                            className="p-2.5 text-heading/70 hover:text-heading hover:bg-heading/5 rounded-md transition-colors cursor-pointer flex items-center justify-center border border-divider/40"
+                        >
+                            {theme === "dark" ? (
+                                <Sun size={16} className="text-accent" />
+                            ) : (
+                                <Moon size={16} className="text-heading" />
+                            )}
+                        </button>
+
+                        <button
+                            onClick={() => window.dispatchEvent(new CustomEvent("open-enquiry-modal"))}
+                            className="hidden sm:flex items-center gap-3 py-2 px-6 bg-heading text-background border border-heading rounded-[0.25rem] transition-all duration-700 group shadow-lg shadow-heading/10 hover:shadow-heading/20 hover:scale-[1.02] cursor-pointer"
+                        >
+                            <span className="text-[10px] uppercase tracking-[0.4em] font-black">Enquire</span>
+                        </button>
 
                         <button
                             className="xl:hidden text-heading/60 hover:text-heading p-2 bg-heading/5 rounded-md transition-colors cursor-pointer"
@@ -136,9 +135,18 @@ const Header = ({ data }: HeaderProps) => {
                     >
                         <div className="flex justify-between items-center mb-16 border-b border-divider pb-8">
                             <span className="text-[9px] uppercase tracking-[0.8em] font-black text-accent italic">DIRECTORY</span>
-                            <button onClick={() => setIsMobileMenuOpen(false)} className="p-3 border border-divider/20 rounded-full text-heading/60 hover:bg-heading/5 transition-colors cursor-pointer">
-                                <X size={24} strokeWidth={1} />
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={toggleTheme}
+                                    aria-label="Toggle visual theme"
+                                    className="p-3 border border-divider/20 rounded-full text-heading/70 hover:bg-heading/5 transition-colors cursor-pointer"
+                                >
+                                    {theme === "dark" ? <Sun size={18} className="text-accent" /> : <Moon size={18} />}
+                                </button>
+                                <button onClick={() => setIsMobileMenuOpen(false)} className="p-3 border border-divider/20 rounded-full text-heading/60 hover:bg-heading/5 transition-colors cursor-pointer">
+                                    <X size={24} strokeWidth={1} />
+                                </button>
+                            </div>
                         </div>
 
                         <div className="flex flex-col space-y-3">
@@ -163,21 +171,16 @@ const Header = ({ data }: HeaderProps) => {
                             ))}
                         </div>
 
-                        <div className="mt-auto pt-12 border-t border-divider">
-                            <div className="flex justify-between items-end bg-surface/50 p-8 rounded-xl">
-                                <div className="space-y-3">
-                                    <span className="text-[8px] uppercase tracking-[0.4em] text-muted font-bold block opacity-40">ACCESS LEVEL</span>
-                                    <p className="text-[10px] uppercase tracking-[0.3em] text-accent italic font-bold">
-                                        {isAuthenticated ? 'AUTHORIZED PARTNER' : 'VISITOR STATUS'}
-                                    </p>
-                                </div>
-                                {isAuthenticated && (
-                                    <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] font-black text-red-800/60 hover:text-red-800 transition-colors py-2 px-4 border border-red-800/10 rounded-lg cursor-pointer">
-                                        <LogOut size={12} />
-                                        TERMINATE
-                                    </button>
-                                )}
-                            </div>
+                        <div className="mt-auto pt-10 border-t border-divider">
+                            <button
+                                onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    window.dispatchEvent(new CustomEvent("open-enquiry-modal"));
+                                }}
+                                className="w-full flex items-center justify-center py-4 bg-heading text-background rounded-lg cursor-pointer hover:bg-heading/90 transition-colors"
+                            >
+                                <span className="text-[10px] uppercase tracking-[0.4em] font-black">Connect With Advisory</span>
+                            </button>
                         </div>
                     </motion.div>
                 )}

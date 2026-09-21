@@ -1,19 +1,42 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { TestimonialsData } from "@/types/cms";
 
-const Testimonials = () => {
-    const quotes = [
-        {
-            text: "The architectural integrity displayed in their work is unmatched. They don't just build residences; they curate environments that elevate the human experience.",
-            author: "Marcus Aurelius III",
-            role: "Real Estate Strategist"
-        },
-        {
-            text: "A masterclass in spatial logic. Every corner of the building feels intentional, every material choice feels like a dialogue with the environment.",
-            author: "Elena Sorokin",
-            role: "Design Critic, Architectural Digest"
-        }
-    ];
+interface TestimonialsProps {
+    data?: TestimonialsData;
+}
+
+const defaultQuotes = [
+    {
+        text: "71 Zone Realty represented our family office in securing an off-market duplex in Worli. Their discretion, forensic title diligence, and ability to negotiate institutional pricing set a standard I haven't witnessed elsewhere in Indian real estate.",
+        author: "Siddharth Goenka",
+        role: "Managing Director, Singhania-Goenka Capital"
+    },
+    {
+        text: "As an NRI residing in London, purchasing property in Mumbai was historically daunting. The team at 71 Zone handled everything—from FEMA documentation and video walkthroughs to registration through special power of attorney. Flawless execution.",
+        author: "Dr. Kavita Merchant",
+        role: "Cardiothoracic Surgeon & Investor, London"
+    },
+    {
+        text: "Their curatorial eye is unmatched. Rather than inundating us with twenty mediocre brochures, they presented exactly two properties—both architectural gems. We closed on our Alibaug coastal villa within two weeks.",
+        author: "Aditya V. Singhal",
+        role: "Founder & CEO, TechVentures"
+    },
+    {
+        text: "The level of analytical depth 71 Zone brings to valuation, rental yield modeling, and exit timing is what distinguishes them from typical brokers. They are true asset advisors.",
+        author: "Meera Nambiar",
+        role: "Partner, Apex Private Equity"
+    }
+];
+
+const Testimonials = ({ data }: TestimonialsProps) => {
+    const quotes = data && data.items && data.items.length > 0
+        ? data.items.map(item => ({
+            text: item.quote,
+            author: item.author,
+            role: item.role + (item.year ? ` • ${item.year}` : "")
+        }))
+        : defaultQuotes;
 
     return (
         <section id="testimonials" className="section-padding bg-surface border-b border-divider overflow-hidden">
@@ -35,7 +58,7 @@ const Testimonials = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                                    className="text-4xl md:text-6xl font-serif italic text-heading leading-[1.2] tracking-tight mb-16"
+                                    className="text-3xl md:text-5xl font-serif italic text-heading leading-[1.3] tracking-tight mb-16"
                                 >
                                     {quote.text}
                                 </motion.p>

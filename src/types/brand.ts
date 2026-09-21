@@ -23,8 +23,11 @@ export interface BrandContent {
         address: string;
         phone: string;
         email: string;
+        whatsapp?: string;
+        established?: string;
     };
     socials: {
+        whatsapp?: string;
         instagram: string;
         facebook: string;
         twitter: string;

@@ -27,7 +27,8 @@ export function BrandProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         const root = window.document.documentElement;
-        const colors = theme === "dark" ? activeBrand.colors.dark : activeBrand.colors.light;
+        const isDark = theme === "dark";
+        const colors = isDark ? activeBrand.colors.dark : activeBrand.colors.light;
 
         root.style.setProperty("--primary", colors.primary);
         root.style.setProperty("--accent", colors.accent);
@@ -35,6 +36,15 @@ export function BrandProvider({ children }: { children: React.ReactNode }) {
         root.style.setProperty("--gold", colors.gold);
         root.style.setProperty("--background", colors.background);
         root.style.setProperty("--foreground", colors.foreground);
+
+        // Synchronize Tailwind v4 theme color tokens with WCAG AAA readability
+        root.style.setProperty("--color-accent", colors.accent);
+        root.style.setProperty("--color-background", colors.background);
+        root.style.setProperty("--color-heading", colors.primary);
+        root.style.setProperty("--color-surface", colors.secondary);
+        root.style.setProperty("--color-primary", colors.primary);
+        root.style.setProperty("--color-body", isDark ? "#D1C7BC" : "#2E2822");
+        root.style.setProperty("--color-divider", isDark ? "rgba(250, 247, 242, 0.15)" : "rgba(20, 17, 14, 0.10)");
 
         // Explicitly update font variables
         root.style.setProperty("--font-serif", activeBrand.fonts.serif);

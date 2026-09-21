@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-    /* Refined Luxury Palette */
-    --color-background: #F9F7F2;
-    --color-heading: #1A120B;
-    --color-primary: #1A120B;
-    --color-body: #4A443F;
-    --color-accent: #A68A64;
-    --color-surface: #F2EBE1;
-    --color-divider: rgba(26, 18, 11, 0.04);
+    /* Refined Luxury Palette - Warm Alabaster Ivory & Royal Champagne Gold */
+    --color-background: #FAF7F2;
+    --color-heading: #14110E;
+    --color-primary: #14110E;
+    --color-body: #423C36;
+    --color-accent: #C5A059;
+    --color-surface: #EFE8DC;
+    --color-divider: rgba(20, 17, 14, 0.07);
 
     /* Typography Pairing */
     --font-serif: "Playfair Display", serif;

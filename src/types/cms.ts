@@ -11,6 +11,16 @@ export interface AboutData {
     subtitle: string;
     story: string;
     legacy: string;
+    paragraphs?: string[];
+    mission?: string;
+    values?: string;
+    leadership?: {
+        name: string;
+        title: string;
+        photo: string;
+        bio: string;
+        linkedin?: string;
+    }[];
     stats: {
         count: string;
         label: string;
@@ -23,6 +33,7 @@ export interface Amenity {
     title: string;
     description: string;
     image?: string;
+    features?: string[];
 }
 
 export interface AmenitiesData {
@@ -40,6 +51,9 @@ export interface Project {
     status: string;
     price?: string;
     slug: string;
+    config?: string;
+    builder?: string;
+    description?: string;
 }
 
 export interface ProjectsData {
@@ -66,10 +80,22 @@ export interface TestimonialsData {
     items: Testimonial[];
 }
 
+export interface OfficeLocation {
+    name: string;
+    region: string;
+    address: string;
+    phone?: string;
+}
+
 export interface ContactInfo {
     address: string;
     phone: string;
     email: string;
+    whatsapp?: string;
+    established?: string;
+    hours?: string;
+    rera?: string;
+    offices?: OfficeLocation[];
     socials: {
         platform: string;
         url: string;
@@ -78,9 +104,33 @@ export interface ContactInfo {
 
 export interface SiteSettings {
     brandName: string;
+    companyName?: string;
     logoText: string;
     logoSubtext?: string;
+    established?: string;
     contact: ContactInfo;
+}
+
+export interface CaseStudy {
+    year: string;
+    title: string;
+    location: string;
+    category: string;
+    image: string;
+    brief?: string;
+    outcome?: string;
+}
+
+export interface Partner {
+    name: string;
+    type: string;
+}
+
+export interface NRIService {
+    title: string;
+    description: string;
+    features?: string[];
+    points?: string[];
 }
 
 export interface CtaBannerData {
@@ -99,4 +149,7 @@ export interface HomePageData {
     amenities: AmenitiesData;
     testimonials: TestimonialsData;
     ctaBanner: CtaBannerData;
+    caseStudies?: CaseStudy[];
+    partners?: Partner[];
+    nriServices?: NRIService[];
 }

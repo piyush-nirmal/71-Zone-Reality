@@ -4,10 +4,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileCTA from "@/components/layout/MobileCTA";
 import Modal from "@/components/ui/Modal";
-import BrandSelector from "@/components/ui/BrandSelector";
 import { getPageData } from "@/lib/content";
 import { useBrand } from "@/context/BrandContext";
-import { AuthProvider } from "@/context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Pages
@@ -18,6 +16,7 @@ import Philosophy from "@/pages/Philosophy";
 import ArchivesPage from "@/pages/Archives";
 import Testaments from "@/pages/Testaments";
 import Dialogue from "@/pages/Dialogue";
+import Associations from "@/pages/Associations";
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -30,10 +29,19 @@ const ScrollToTop = () => {
 const MainSite = () => {
     const { activeBrand } = useBrand();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [propertySubject, setPropertySubject] = useState<string>("");
     const pageData = getPageData(activeBrand.id);
 
     useEffect(() => {
-        const handleOpenModal = () => setIsModalOpen(true);
+        const handleOpenModal = (e: Event) => {
+            const customEvent = e as CustomEvent<{ property?: string }>;
+            if (customEvent.detail?.property) {
+                setPropertySubject(customEvent.detail.property);
+            } else {
+                setPropertySubject("");
+            }
+            setIsModalOpen(true);
+        };
         window.addEventListener("open-enquiry-modal", handleOpenModal);
         return () => window.removeEventListener("open-enquiry-modal", handleOpenModal);
     }, []);
@@ -52,6 +60,8 @@ const MainSite = () => {
                         <Route path="/philosophy" element={<Philosophy data={pageData} />} />
                         <Route path="/archives" element={<ArchivesPage data={pageData} />} />
                         <Route path="/testaments" element={<Testaments data={pageData} />} />
+                        <Route path="/associations" element={<Associations data={pageData} />} />
+                        <Route path="/developer-associations" element={<Associations data={pageData} />} />
                         <Route path="/dialogue" element={<Dialogue data={pageData} />} />
                     </Routes>
                 </AnimatePresence>
@@ -59,19 +69,23 @@ const MainSite = () => {
 
             <Footer data={pageData} />
             <MobileCTA data={pageData.settings.contact} />
-            <BrandSelector />
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setPropertySubject("");
+                }} 
+                propertySubject={propertySubject}
+            />
         </div>
     );
 }
 
 function App() {
     return (
-        <AuthProvider>
-            <Router>
-                <MainSite />
-            </Router>
-        </AuthProvider>
+        <Router>
+            <MainSite />
+        </Router>
     );
 }
 
